@@ -91,7 +91,7 @@ p.footer {
   background-size: 45%;
 }
 
-.progress-bar {
+/* .progress-bar {
     position: absolute;
     left: 27.5%;
     top: 80%;
@@ -108,7 +108,7 @@ p.footer {
     border-radius: 3px;
     transition: width .4s ease-in-out;
     background-color: #3dc5de;
-}
+} */
 
 .stripes span {
     background-size: 30px 30px;
