@@ -12,12 +12,7 @@
   <!--======================Jquery===========================-->
   <script src="jquery-3.4.1.min.js"></script>
   <!--======================GPID===========================-->
-  <script type="text/javascript" src="./gpid.js"></script>
   <script type="text/javascript" src="./ads.js"></script>
-
-  <!--======================Loading Page===========================-->
-  <script type="text/javascript" src="./loadingPage.js"></script>
-  <link rel="stylesheet" href="./loadingPage.css">
 
   <!--======================Sticky Ads===========================-->
   <script type="text/javascript" src="./stickyBanner.js"></script>
@@ -107,6 +102,25 @@
         }
       });
     })();
+    window.onload = function () {
+      console.log('load');
+      function checkSound() {
+        try {
+          var mute = location.search.substring(1).split("&")?.find((a) => { return a.startsWith('mute') })?.split("=")[1];
+
+          if (mute === 'true') {
+            window.enableSound(false);
+          } else {
+            window.enableSound(true);
+          }
+        } catch (error) {
+          setTimeout(checkSound, 100);
+        }
+      }
+
+      checkSound();
+
+    };
   </script>
 </body>
 

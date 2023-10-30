@@ -9,7 +9,7 @@ if (isTestModeOn) {
     gameInput['surface'] = 'test';
 }
 
-function progressBar(percentage){
+function progressBar(percentage) {
     console.log("Loading Bar :", percentage)
 }
 
@@ -70,7 +70,7 @@ var LBBannerObj = {
     adUnitName: `${gameInput.publisherName}_${gameInput.gameName}_Leaderboard_Top`,
     pageName,               //Game Name
     categoryName,         //Publisher Name
-    placementName: isTestModeOn? 'Test_Banner' : 'Leaderboard',
+    placementName: isTestModeOn ? 'Test_Banner' : 'Leaderboard',
     containerID: "div-gpt-ad-1",            //Div Id for banner
     height: 250,
     width: 300,
@@ -90,7 +90,7 @@ function failCb(reason) { }
 
 var replayObj = {
     adUnitName: `${gameInput.publisherName}_${gameInput.gameName}_FsReplay_Replay`,
-    placementName: isTestModeOn? "Test_Replay" : "FsReplay",
+    placementName: isTestModeOn ? "Test_Replay" : "FsReplay",
     pageName,               //Game Name
     categoryName,         //Publisher Name
     containerID: '',
@@ -102,7 +102,7 @@ var replayObj = {
 }
 var rewardObj = {
     adUnitName: `${gameInput.publisherName}_${gameInput.gameName}_FsRewarded_Reward`,
-    placementName: isTestModeOn? "Test_Rewarded": "FsRewarded",
+    placementName: isTestModeOn ? "Test_Rewarded" : "FsRewarded",
     pageName,               //Game Name
     categoryName,         //Publisher Name
     containerID: '',

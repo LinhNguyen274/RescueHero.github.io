@@ -2,21 +2,25 @@ window.boot = function () {
     var settings = window._CCSettings;
     window._CCSettings = undefined;
     var onProgress = null;
+
     var RESOURCES = cc.AssetManager.BuiltinBundleName.RESOURCES;
     var INTERNAL = cc.AssetManager.BuiltinBundleName.INTERNAL;
     var MAIN = cc.AssetManager.BuiltinBundleName.MAIN;
-
     function setLoadingDisplay() {
         // Loading splash scene
         var splash = document.getElementById('splash');
         var progressBar2 = splash.querySelector('.progress-bar span');
         onProgress = function (finish, total) {
             var percent = 100 * finish / total;
-            window.getLoadingPerc = function () {
-                return percent
-            }
+            // if (progressBar) {
+            //     progressBar.style.width = percent.toFixed(2) + '%';
+            // }
+            // progressBar(percent)
             if (window.progressBar) {
                 progressBar(percent)
+            }
+            window.getLoadingPerc = function () {
+                return percent
             }
         };
         splash.style.display = 'block';
@@ -26,7 +30,7 @@ window.boot = function () {
             splash.style.display = 'none';
         });
 
-    };
+    }
 
     var onStart = function () {
 
