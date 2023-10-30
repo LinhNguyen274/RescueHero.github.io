@@ -1,11 +1,26 @@
-const gameInput = { gameName: '<GameName>', publisherName: '<PublisherName>', surface: "test" };
+var gameInput = { gameName: 'RescueHero', publisherName: 'Gamee' };
+
+var queryParams = location.search.substring(1)?.split("&")
+var isTestModeOn = queryParams.find((a) => { return a.startsWith('mode') })?.split("=")[1].toLowerCase() === 'test' ? true : false;
+var gpID = queryParams.find((a) => { return a.startsWith('gpid') })?.split("=")[1]
+
+
+if (isTestModeOn) {
+    gameInput['surface'] = 'test';
+}
+
+function progressBar(percentage){
+    console.log("Loading Bar :", percentage)
+}
+
+function sendCustomAnalyticsEvent(eventType, extras) {
+    console.log("AnalyticsEvent", eventType, extras);
+}
 //loading scripts
 $.getScript(
 
 
-    "https://g.glance-cdn.com/public/content/games/xiaomi/gamesAd.js",
-
-    "gpid.js"
+    "https://g.glance-cdn.com/public/content/games/xiaomi/gamesAd.js"
 
 )
     .done(function (script, textStatus) {
@@ -22,12 +37,15 @@ var is_replay_noFill = false
 var is_rewarded_noFill = false
 var isRewardGranted = false
 var isRewardedAdClosedByUser = false
+
+var pageName = `${gameInput.publisherName}_${gameInput.gameName}`
+var categoryName = isTestModeOn ? 'google' : `${gameInput.publisherName}`
 // Objects for different ad format.
-const LPMercObj = {
-    adUnitName: "",
-    pageName: 'PublisherName_GameName',               //Game Name
-    categoryName: 'google',           //Publisher Name
-    placementName: 'Test_Banner',
+var LPMercObj = {
+    adUnitName: `${gameInput.publisherName}_${gameInput.gameName}_Gameload_Bottom`,
+    pageName,               //Game Name
+    categoryName,         //Publisher Name
+    placementName: isTestModeOn ? 'Test_Banner' : 'Gameload',
     containerID: "div-gpt-ad-2",            //Div Id for banner
     height: 250,
     width: 300,
@@ -35,11 +53,11 @@ const LPMercObj = {
     yc: '3.0',
     gpid: gpID,
 }
-const StickyObj = {
-    adUnitName: "",
-    pageName: 'PublisherName_GameName',               //Game Name
-    categoryName: 'google',           //Publisher Name
-    placementName: 'Test_Banner',
+var StickyObj = {
+    adUnitName: `${gameInput.publisherName}_${gameInput.gameName}_Ingame_Bottom`,
+    pageName,               //Game Name
+    categoryName,         //Publisher Name
+    placementName: isTestModeOn ? 'Test_Banner' : 'Ingame',
     containerID: "banner-ad",            //Div Id for banner
     height: 50,
     width: 320,
@@ -48,11 +66,11 @@ const StickyObj = {
     gpid: gpID,
 }
 
-const LBBannerObj = {
-    adUnitName: "",
-    pageName: 'PublisherName_GameName',               //Game Name
-    categoryName: 'google',           //Publisher Name
-    placementName: 'Test_Banner',
+var LBBannerObj = {
+    adUnitName: `${gameInput.publisherName}_${gameInput.gameName}_Leaderboard_Top`,
+    pageName,               //Game Name
+    categoryName,         //Publisher Name
+    placementName: isTestModeOn? 'Test_Banner' : 'Leaderboard',
     containerID: "div-gpt-ad-1",            //Div Id for banner
     height: 250,
     width: 300,
@@ -70,11 +88,11 @@ function failCb(reason) { }
 
 
 
-const replayObj = {
-    adUnitName: "",
-    placementName: "Test_Rewarded",
-    pageName: 'PublisherName_GameName”',
-    categoryName: 'google',
+var replayObj = {
+    adUnitName: `${gameInput.publisherName}_${gameInput.gameName}_FsReplay_Replay`,
+    placementName: isTestModeOn? "Test_Replay" : "FsReplay",
+    pageName,               //Game Name
+    categoryName,         //Publisher Name
     containerID: '',
     height: '',
     width: '',
@@ -82,11 +100,11 @@ const replayObj = {
     yc: '',
     gpid: gpID,
 }
-const rewardObj = {
-    adUnitName: "",
-    placementName: "Test_Rewarded",
-    pageName: 'PublisherName_GameName”',
-    categoryName: 'google',
+var rewardObj = {
+    adUnitName: `${gameInput.publisherName}_${gameInput.gameName}_FsRewarded_Reward`,
+    placementName: isTestModeOn? "Test_Rewarded": "FsRewarded",
+    pageName,               //Game Name
+    categoryName,         //Publisher Name
     containerID: '',
     height: '',
     width: '',
@@ -94,7 +112,6 @@ const rewardObj = {
     yc: '',
     gpid: gpID,
 }
-
 //banner ads callbacks 
 function bannerCallbacks(obj) {
 
@@ -196,7 +213,7 @@ function runOnAdClosed() {
 
         replayDone();
         _triggerReason = ''
-        showGame();
+        // showGame();
 
         replayInstance = window.GlanceGamingAdInterface.loadRewardedAd(replayObj, rewardedCallbacks);
 
@@ -205,7 +222,7 @@ function runOnAdClosed() {
         // If user close ad before reward
         if (!isRewardGranted && isRewardedAdClosedByUser) {
             // call game function for not earning reward (failure case)
-
+            rewardFail();
         } else {
             rewardDone();
             // call game function for earned reward  (success case)
@@ -214,8 +231,6 @@ function runOnAdClosed() {
         rewardInstance = window.GlanceGamingAdInterface.loadRewardedAd(rewardObj, rewardedCallbacks);
 
     }
-
-
 }
 
 // function called on replay button (leaderboard) clicked
