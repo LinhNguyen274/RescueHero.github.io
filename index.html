@@ -4,12 +4,26 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Hero Pipe</title>
+  <title>Cocos Creator | RescueHero</title>
 
   <!--http://www.html5rocks.com/en/mobile/mobifying/-->
   <meta name="viewport"
     content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1" />
+  <!--======================Jquery===========================-->
+  <script src="jquery-3.4.1.min.js"></script>
+  <!--======================GPID===========================-->
+  <script type="text/javascript" src="./ads.js"></script>
 
+  <!--======================Sticky Ads===========================-->
+  <script type="text/javascript" src="./stickyBanner.js"></script>
+  <link rel="stylesheet" href="./stickyBanner.css">
+
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
+
+  <!--======================RewardedAds===========================-->
   <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -37,13 +51,13 @@
 
   <!--<link rel="apple-touch-icon" href=".png" />-->
   <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
+
   <link rel="stylesheet" type="text/css" href="style-mobile.css" />
   <link rel="icon" href="favicon.ico" />
-  <link rel="stylesheet" href="./stickyBanner.css">
-
 </head>
 
 <body>
+  <script>addLoader();</script>
   <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
   <div id="splash">
     <div class="progress-bar stripes">
@@ -52,6 +66,7 @@
   </div>
 
   <script src="src/settings.js" charset="utf-8"></script>
+
   <script src="main.js" charset="utf-8"></script>
 
   <script type="text/javascript">
@@ -87,12 +102,26 @@
         }
       });
     })();
-  </script>
-  <div id="bannerOverlay">
-    <div id="CONTAINER_ID_TO_PUT_AD_IN">
+    window.onload = function () {
+      console.log('load');
+      function checkSound() {
+        try {
+          var mute = location.search.substring(1).split("&")?.find((a) => { return a.startsWith('mute') })?.split("=")[1];
 
-    </div>
-  </div>
+          if (mute === 'true') {
+            window.enableSound(false);
+          } else {
+            window.enableSound(true);
+          }
+        } catch (error) {
+          setTimeout(checkSound, 100);
+        }
+      }
+
+      checkSound();
+
+    };
+  </script>
 </body>
 
 </html>
