@@ -13,3 +13,7 @@
 #banner-ad {
     margin: 0 auto;
 }
+
+#contentWrap {
+    overflow: hidden;
+}
