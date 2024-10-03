@@ -1,8 +1,15 @@
+:root {
+    --width: 100%;
+    --height: 100%;
+}
+
 #bannerOverlay {
     width: 100%;
-    height: 50px;
+    height: 10.5%;
     position: fixed;
     bottom: 1%;
+    margin-left: auto;
+    margin-right: auto;
     /* left: 1%; */
     display: flex;
     background-color: rgba(0, 0, 0, 0.0);
@@ -10,10 +17,9 @@
     z-index: 2;
 }
 
-#banner-ad {
-    margin: 0 auto;
-}
-
-#contentWrap {
-    overflow: hidden;
+#CONTAINER_ID_TO_PUT_AD_IN {
+    width: var(--width);
+    height: var(--height);
+    margin-left: auto;
+    margin-right: auto;
 }
